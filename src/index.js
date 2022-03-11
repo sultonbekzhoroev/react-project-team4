@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {RestaurantProvider} from './context/RestaurantGeneralContext'
 
 ReactDOM.render(
   <React.StrictMode>
+    <RestaurantProvider>
     <App />
+    </RestaurantProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
