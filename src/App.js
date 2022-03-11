@@ -24,7 +24,7 @@ function App() {
         const getData = async()=>{
             try{
               setTimeout(async()=>{
-                let response = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/e9aa3a75fcaaa95700d95e2d90bc7663af58d387/bakery-project-team5");
+                let response = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/bc77764521bced7628a37cb6bcb0f93c6165561c/bakery-project-team5");
                 let res = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/1e170897e10f5db6ecbf5d1081294262/raw/715e6a92ac3e22838bbb3c15b06bdaa437814905/drinks-team5.json");
               setdrinksList(res.data.drinks)
               setFoodList(response.data.foods)
