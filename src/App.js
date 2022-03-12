@@ -13,62 +13,6 @@ import { TextField } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-
-  const [isLoading, setIsLoading] =useState(true)
-  const [modalActive, setmodalActive] =useState(false)
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [foodList, setFoodList] =useState([])
-  const [drinksList, setdrinksList] =useState([])
-  const [filteredfoodList, setFilteredFoodList] =useState([])
-  const [basketfoodList, setBasketfoodList] =useState([])
-  
-
-        const getData = async()=>{
-            try{
-              setTimeout(async()=>{
-                let response = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/bc77764521bced7628a37cb6bcb0f93c6165561c/bakery-project-team5");
-                let res = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/1e170897e10f5db6ecbf5d1081294262/raw/715e6a92ac3e22838bbb3c15b06bdaa437814905/drinks-team5.json");
-              setdrinksList(res.data.drinks)
-              setFoodList(response.data.foods)
-              setFilteredFoodList(response.data.foods)
-              setIsLoading(false)
-              },1000)
-              
-
-            } catch(error){
-              console.log(error);
-            }
-        }
-
-        const addToBasket = (food) =>{
-          const exist = basketfoodList.find(x=>x.id === food.id)
-          if(exist){
-            setBasketfoodList(basketfoodList.map(x=>x.id === food.id ? {...exist, qty: exist.qty +1} :x))
-          }
-          else{
-            setBasketfoodList([...basketfoodList, {...food, qty:1}])
-          }
-        }
-        const onRemove =(food) =>{
-        const exist = basketfoodList.find((x)=> x.id === food.id);
-        if(exist.qty === 1){
-          setBasketfoodList(basketfoodList.filter((x)=>x.id!==food.id))
-        } else{
-          setBasketfoodList(
-            basketfoodList.map((x)=>
-            x.id ===food.id ? {...exist, qty: exist.qty -1} :x)
-          )
-        }
-      }
-        useEffect(()=>{
-          let list =foodList.filter(food => selectedCategory === food.category || selectedCategory === "" || selectedCategory === 'All')
-          setFilteredFoodList(list)
-        }, [selectedCategory])
-
-          useEffect(()=>{
-            getData()
-          }, [])
-
   const [isLoading, setIsLoading] = useState(true);
   const [modalActive, setmodalActive] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
