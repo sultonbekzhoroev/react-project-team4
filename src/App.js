@@ -26,7 +26,7 @@ function App() {
     try {
       setTimeout(async () => {
         let response = await axios.get(
-          "https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/e9aa3a75fcaaa95700d95e2d90bc7663af58d387/bakery-project-team5"
+          "https://mocki.io/v1/eb3700c3-347e-43ec-bc05-3d4db33f6a76"
         );
         let res = await axios.get(
           "https://gist.githubusercontent.com/zarinaazamatova/1e170897e10f5db6ecbf5d1081294262/raw/715e6a92ac3e22838bbb3c15b06bdaa437814905/drinks-team5.json"
