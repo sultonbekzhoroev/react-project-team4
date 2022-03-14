@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+*{
+    font-family: 'Prompt', sans-serif;
+}
+.order-img{
+    width: 120px;
+    height: 120px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 0;
+}
+.row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.btn-plus{
+    width: 60px;
+    background-color: rosybrown;
+    border: solid 1px rgb(189, 124, 124);
+    margin-right: 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+.btn-minus {
+    width: 60px;
+    background-color: rosybrown;
+    border: solid 1px rgb(189, 124, 124);
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+.btn-close {
+    background-color: rosybrown;
+    border: solid 1px rgb(189, 124, 124);
+}
+.btn-order-basket {
+    background-color: rosybrown;
+    border: solid 1px rgb(189, 124, 124);
+}
+.btn-secondary {
+    background-color: lightgray;
+    border: solid 1px lightgray;
+    color: rgb(189, 124, 124);
+}
+.h4{
+    display: inline;
+    padding: 5px;
+}
+.total{
+    color: red;
+}
