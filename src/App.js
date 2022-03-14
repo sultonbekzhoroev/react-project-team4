@@ -6,7 +6,7 @@ import { DrinkCard } from './components/DrinkCard';
 import { Basket } from './components/Basket'
 import { NavBar } from './components/NavBar';
 import { Nav,Navbar,Container } from 'react-bootstrap';
-import { BsFillCartCheckFill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from 'spinners-react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -24,7 +24,7 @@ function App() {
         const getData = async()=>{
             try{
               setTimeout(async()=>{
-                let response = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/e9aa3a75fcaaa95700d95e2d90bc7663af58d387/bakery-project-team5");
+                let response = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/5e928e0c87651f1db46955ab8b126ef2/raw/77a6e542ed057e3bf33b0117b8d26e8e84f1bcef/bakery-project-team5");
                 let res = await axios.get("https://gist.githubusercontent.com/zarinaazamatova/1e170897e10f5db6ecbf5d1081294262/raw/715e6a92ac3e22838bbb3c15b06bdaa437814905/drinks-team5.json");
               setdrinksList(res.data.drinks)
               setFoodList(response.data.foods)
@@ -86,17 +86,18 @@ function App() {
       {
         isLoading ? <SpinnerDotted className = 'spinner' size={90} thickness={172} speed={100} color="rgba(172, 57, 100, 0.85)" />: <div>
         
-
+          
          <Basket className="cart" modalActive ={modalActive}  handleClose = {handleClose} setmodalActive ={setmodalActive} addToBasket={addToBasket} onRemove={onRemove}  basketfoodList ={basketfoodList}/> 
       
       <header>
       <h1>STYLE SWEET</h1>
       <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
-       <BsFillCartCheckFill onClick={handleShow}/>
-     
+
+       <BsFillCartFill onClick={handleShow}/>
+       <span className='total' onClick={handleShow}>{basketfoodList.length}</span>
 
       <Navbar bg="light" expand="lg">
-              <Container> 
+      <Container> 
      <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">

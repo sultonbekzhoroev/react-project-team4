@@ -19,12 +19,24 @@ header {
   z-index: 1;
   padding-top: 30px;
 }
+.total{
+  display: block;
+  position: absolute;
+  top: 11px;
+  right: 30px;
+  color: red;
+  font-weight:bold;
+  z-index: 2;
+}
+.total:hover{
+  cursor: pointer;
+}
 #home{
   position: absolute;
   top: 30px;
   height: 20px;
- width: 100%;
- background-color: aqua;
+  width: 100%;
+  background-color: aqua;
 
 }
 .container{

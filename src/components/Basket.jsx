@@ -5,8 +5,12 @@ import './Basket.css'
 
 export const Basket = ({modalActive, setmodalActive,handleClose, basketfoodList, addToBasket, onRemove}) =>{
         const [sum, setSum] =useState('')
-        // setSum(basketfoodList.reduce((sum,el)=> sum+el.price))
-
+        const getTotal = () => {
+		return basketfoodList.reduce((acc, value) => {
+			return acc + (value.price*value.qty);
+		}, 0).toFixed(2);
+	};
+       
        return (
         <Modal show={modalActive} onHide={handleClose}>
         <Modal.Header closeButton={handleClose}>
@@ -37,7 +41,7 @@ export const Basket = ({modalActive, setmodalActive,handleClose, basketfoodList,
        {/*    {basketfoodList.reduce((sum,food)=>(
             sum+(food.qty*food.price.toFixed(2))
           ))} */}
-        Total sum: {sum}
+        Total sum: ${getTotal()}
         <Modal.Footer>
           <Button  variant="secondary" onClick={handleClose}>
             Close
