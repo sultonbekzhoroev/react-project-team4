@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "./FoodCard.css"
+import "../style/FoodCard.css"
 
 
 export const DrinkCard = ({food, addToBasket, drinksList}) =>{

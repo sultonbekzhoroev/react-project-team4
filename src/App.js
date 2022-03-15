@@ -6,10 +6,10 @@ import { DrinkCard } from "./components/DrinkCard";
 import { Basket } from "./components/Basket";
 import { NavBar } from "./components/NavBar";
 import { Nav, Navbar, Container } from "react-bootstrap";
-import { BsFillCartCheckFill } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
-
+import { MdKeyboardVoice } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -40,7 +40,10 @@ function App() {
       console.log(error);
     }
   };
-
+  
+ 
+  /* добавление в корзину*/
+  
   const addToBasket = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist) {
@@ -53,6 +56,9 @@ function App() {
       setBasketfoodList([...basketfoodList, { ...food, qty: 1 }]);
     }
   };
+
+  /* удаление из корзины */
+
   const onRemove = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist.qty === 1) {
@@ -79,6 +85,7 @@ function App() {
     getData();
   }, []);
 
+  /*search*/
   const handleChange = (e) => {
     console.log(e.target.value);
     setSearch(e.target.value);
@@ -87,6 +94,14 @@ function App() {
   const searchedList = filteredfoodList.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase())
   );
+
+ /*search end*/
+  
+  let catList = ["All", ...new Set(foodList.map((food) => food.category))];
+  console.log(catList);
+
+  /*открытие и закрытие модального окна*/
+
 
   const sum = (food) => {
     const total = basketfoodList.reduce((sum, x) => sum + x.price * x.gty);
@@ -97,12 +112,13 @@ function App() {
   // let total = [basketfoodList.reduce((sum,food) => sum + (food.price))]
   let catList = ["All", ...new Set(foodList.map((food) => food.category))];
   console.log(catList);
+
   const handleClose = () => setmodalActive(false);
   const handleShow = () => setmodalActive(true);
 
   return (
     <div className="App">
-      {isLoading ? (
+    {isLoading ? (
         <SpinnerDotted
           className="spinner"
           size={90}
@@ -125,8 +141,12 @@ function App() {
           <header>
             <h1>STYLE SWEET</h1>
             <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
-            <BsFillCartCheckFill onClick={handleShow} />
-            <TextField
+
+            <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
+       <span className='cart-total' onClick={handleShow}>{basketfoodList.length}</span>
+            <div className="search">
+              <MdKeyboardVoice className="keyboard-voice"/>
+              <TextField
               style={{ textAlign: "center" }}
               id="standard-basic"
               label="Search your favorite..."
@@ -134,7 +154,9 @@ function App() {
               variant="standard"
               onChange={(e) => handleChange(e)}
             />
-            <Navbar bg="light" expand="lg">
+            
+            </div>
+            <Navbar className= "navbar" bg="light" expand="lg">
               <Container>
                 <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -159,7 +181,9 @@ function App() {
             {searchedList.map((food) => (
               <FoodCard
                 className="card"
+
                 sum={sum}
+
                 addToBasket={addToBasket}
                 onRemove={onRemove}
                 key={food.id}
@@ -185,5 +209,6 @@ function App() {
     </div>
   );
 }
-
 export default App;
+
+
