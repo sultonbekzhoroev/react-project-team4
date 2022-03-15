@@ -110,8 +110,7 @@ function App() {
   console.log(basketfoodList);
 
   // let total = [basketfoodList.reduce((sum,food) => sum + (food.price))]
-  let catList = ["All", ...new Set(foodList.map((food) => food.category))];
-  console.log(catList);
+  
 
   const handleClose = () => setmodalActive(false);
   const handleShow = () => setmodalActive(true);
