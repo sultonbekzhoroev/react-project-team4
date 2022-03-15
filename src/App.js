@@ -10,8 +10,6 @@ import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -42,8 +40,10 @@ function App() {
       console.log(error);
     }
   };
-
+  
+ 
   /* добавление в корзину*/
+  
   const addToBasket = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist) {
@@ -56,7 +56,9 @@ function App() {
       setBasketfoodList([...basketfoodList, { ...food, qty: 1 }]);
     }
   };
+
   /* удаление из корзины */
+
   const onRemove = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist.qty === 1) {
@@ -99,13 +101,24 @@ function App() {
   console.log(catList);
 
   /*открытие и закрытие модального окна*/
+
+
+  const sum = (food) => {
+    const total = basketfoodList.reduce((sum, x) => sum + x.price * x.gty);
+  };
+
+  console.log(basketfoodList);
+
+  // let total = [basketfoodList.reduce((sum,food) => sum + (food.price))]
+  let catList = ["All", ...new Set(foodList.map((food) => food.category))];
+  console.log(catList);
+
   const handleClose = () => setmodalActive(false);
   const handleShow = () => setmodalActive(true);
 
   return (
     <div className="App">
-      
-      {isLoading ? (
+    {isLoading ? (
         <SpinnerDotted
           className="spinner"
           size={90}
@@ -133,7 +146,7 @@ function App() {
        <span className='cart-total' onClick={handleShow}>{basketfoodList.length}</span>
             <div className="search">
               <MdKeyboardVoice className="keyboard-voice"/>
-            <TextField
+              <TextField
               style={{ textAlign: "center" }}
               id="standard-basic"
               label="Search your favorite..."
@@ -168,6 +181,9 @@ function App() {
             {searchedList.map((food) => (
               <FoodCard
                 className="card"
+
+                sum={sum}
+
                 addToBasket={addToBasket}
                 onRemove={onRemove}
                 key={food.id}
@@ -193,5 +209,6 @@ function App() {
     </div>
   );
 }
-
 export default App;
+
+
