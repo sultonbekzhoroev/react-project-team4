@@ -160,7 +160,7 @@ function App() {
             <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
        <span className='cart-total' onClick={handleShow} >{totalLength}</span>
             <div className="search">
-              <MdKeyboardVoice className="keyboard-voice"/>
+            <MdKeyboardVoice className="keyboard-voice" onClick={() => setIsListening((prev) => !prev)}/>
             <TextField
               style={{ textAlign: "center" }}
               id="standard-basic"
