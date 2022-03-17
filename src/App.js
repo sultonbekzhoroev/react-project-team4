@@ -11,6 +11,13 @@ import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
 
+const SpeechRecognition = 
+window.SpeechRecognition || window.webkitSpeechRecognition;
+const mic = new SpeechRecognition();
+
+mic.continuous = true;
+mic.interimResults = true;
+mic.lang = "en-US";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -25,6 +32,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [gift, setGift] =useState([]);
   const [totalLength, setTotalLength] =useState([]);
+  const [isListening, setIsListening] = useState(false);
+
 
   const getData = async () => {
     try {
@@ -151,7 +160,7 @@ function App() {
             <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
        <span className='cart-total' onClick={handleShow} >{totalLength}</span>
             <div className="search">
-              <MdKeyboardVoice className="keyboard-voice"/>
+            <MdKeyboardVoice className="keyboard-voice" onClick={() => setIsListening((prev) => !prev)}/>
             <TextField
               style={{ textAlign: "center" }}
               id="standard-basic"
