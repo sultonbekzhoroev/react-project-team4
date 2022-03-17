@@ -11,6 +11,13 @@ import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
 
+const SpeechRecognition = 
+window.SpeechRecognition || window.webkitSpeechRecognition;
+const mic = new SpeechRecognition();
+
+mic.continuous = true;
+mic.interimResults = true;
+mic.lang = "en-US";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -25,6 +32,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [gift, setGift] =useState([]);
   const [totalLength, setTotalLength] =useState([]);
+  const [isListening, setIsListening] = useState(false);
+
 
   const getData = async () => {
     try {
