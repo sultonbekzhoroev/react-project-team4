@@ -10,6 +10,8 @@ import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
+
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
   const [filteredfoodList, setFilteredFoodList] = useState([]);
   const [basketfoodList, setBasketfoodList] = useState([]);
   const [search, setSearch] = useState("");
+  const [gift, setGift] =useState([]);
+  const [totalLength, setTotalLength] =useState([]);
 
   const getData = async () => {
     try {
@@ -40,10 +44,15 @@ function App() {
       console.log(error);
     }
   };
-  
- 
+
+  /* gift */
+  const random = Math.floor(Math.random() * drinksList.length); 
+  console.log("random",drinksList[random])
+   const randomDrink = drinksList[random] ;
+  /* gift end */
+
+
   /* добавление в корзину*/
-  
   const addToBasket = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist) {
@@ -56,9 +65,7 @@ function App() {
       setBasketfoodList([...basketfoodList, { ...food, qty: 1 }]);
     }
   };
-
   /* удаление из корзины */
-
   const onRemove = (food) => {
     const exist = basketfoodList.find((x) => x.id === food.id);
     if (exist.qty === 1) {
@@ -85,9 +92,12 @@ function App() {
     getData();
   }, []);
 
+    useEffect(() => {
+   getTotalLength();
+  }, [basketfoodList]);
   /*search*/
   const handleChange = (e) => {
-    console.log(e.target.value);
+    console.log("target", e.target.value);
     setSearch(e.target.value);
   };
 
@@ -96,28 +106,24 @@ function App() {
   );
 
  /*search end*/
-  
+  /* total count */
+  const getTotalLength = () => {
+		setTotalLength( basketfoodList.reduce((acc, value) => {
+			return acc + value.qty;
+		}, 0))   
+	};
+  /* total count end */
   let catList = ["All", ...new Set(foodList.map((food) => food.category))];
-  console.log(catList);
+  console.log("catList", catList);
 
   /*открытие и закрытие модального окна*/
-
-
-  const sum = (food) => {
-    const total = basketfoodList.reduce((sum, x) => sum + x.price * x.gty);
-  };
-
-  console.log(basketfoodList);
-
-  // let total = [basketfoodList.reduce((sum,food) => sum + (food.price))]
-  
-
   const handleClose = () => setmodalActive(false);
   const handleShow = () => setmodalActive(true);
 
   return (
     <div className="App">
-    {isLoading ? (
+      
+      {isLoading ? (
         <SpinnerDotted
           className="spinner"
           size={90}
@@ -134,6 +140,7 @@ function App() {
             setmodalActive={setmodalActive}
             addToBasket={addToBasket}
             onRemove={onRemove}
+            randomDrink={randomDrink}
             basketfoodList={basketfoodList}
           />
 
@@ -142,10 +149,10 @@ function App() {
             <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
 
             <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
-       <span className='cart-total' onClick={handleShow}>{basketfoodList.length}</span>
+       <span className='cart-total' onClick={handleShow} >{totalLength}</span>
             <div className="search">
               <MdKeyboardVoice className="keyboard-voice"/>
-              <TextField
+            <TextField
               style={{ textAlign: "center" }}
               id="standard-basic"
               label="Search your favorite..."
@@ -180,9 +187,6 @@ function App() {
             {searchedList.map((food) => (
               <FoodCard
                 className="card"
-
-                sum={sum}
-
                 addToBasket={addToBasket}
                 onRemove={onRemove}
                 key={food.id}
@@ -208,6 +212,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
-
-
