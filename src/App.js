@@ -11,6 +11,7 @@ import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
@@ -31,6 +32,39 @@ function App() {
   const [gift, setGift] = useState([]);
   const [totalLength, setTotalLength] = useState([]);
   const [isListening, setIsListening] = useState(false);
+
+  useEffect(() => {
+    handleListen();
+  }, [isListening]);
+
+  const handleListen = () => {
+    if (isListening) {
+      mic.start();
+      mic.onend = () => {
+        console.log("continue..");
+        mic.start();
+      };
+    } else {
+      mic.stop();
+      mic.onend = () => {
+        console.log("Stopped Mic on  click");
+      };
+    }
+    mic.onstart = () => {
+      console.log("Mic on");
+    };
+    mic.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
+      console.log(transcript);
+      setSearch(transcript.toLowerCase());
+      mic.onerror = (event) => {
+        console.log(event.error);
+      };
+    };
+  };
 
   const getData = async () => {
     try {
