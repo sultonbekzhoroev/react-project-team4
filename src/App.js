@@ -10,16 +10,14 @@ import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
-
-const SpeechRecognition = 
-window.SpeechRecognition || window.webkitSpeechRecognition;
+import "bootstrap/dist/css/bootstrap.min.css";
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
 
 mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "en-US";
-
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,10 +28,9 @@ function App() {
   const [filteredfoodList, setFilteredFoodList] = useState([]);
   const [basketfoodList, setBasketfoodList] = useState([]);
   const [search, setSearch] = useState("");
-  const [gift, setGift] =useState([]);
-  const [totalLength, setTotalLength] =useState([]);
+  const [gift, setGift] = useState([]);
+  const [totalLength, setTotalLength] = useState([]);
   const [isListening, setIsListening] = useState(false);
-
 
   const getData = async () => {
     try {
@@ -55,11 +52,10 @@ function App() {
   };
 
   /* gift */
-  const random = Math.floor(Math.random() * drinksList.length); 
-  console.log("random",drinksList[random])
-   const randomDrink = drinksList[random] ;
+  const random = Math.floor(Math.random() * drinksList.length);
+  console.log("random", drinksList[random]);
+  const randomDrink = drinksList[random];
   /* gift end */
-
 
   /* добавление в корзину*/
   const addToBasket = (food) => {
@@ -101,8 +97,8 @@ function App() {
     getData();
   }, []);
 
-    useEffect(() => {
-   getTotalLength();
+  useEffect(() => {
+    getTotalLength();
   }, [basketfoodList]);
   /*search*/
   const handleChange = (e) => {
@@ -114,13 +110,15 @@ function App() {
     item.title.toLowerCase().includes(search.toLowerCase())
   );
 
- /*search end*/
+  /*search end*/
   /* total count */
   const getTotalLength = () => {
-		setTotalLength( basketfoodList.reduce((acc, value) => {
-			return acc + value.qty;
-		}, 0))   
-	};
+    setTotalLength(
+      basketfoodList.reduce((acc, value) => {
+        return acc + value.qty;
+      }, 0)
+    );
+  };
   /* total count end */
   let catList = ["All", ...new Set(foodList.map((food) => food.category))];
   console.log("catList", catList);
@@ -131,7 +129,6 @@ function App() {
 
   return (
     <div className="App">
-      
       {isLoading ? (
         <SpinnerDotted
           className="spinner"
@@ -157,21 +154,25 @@ function App() {
             <h1>STYLE SWEET</h1>
             <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
 
-            <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
-       <span className='cart-total' onClick={handleShow} >{totalLength}</span>
+            <BsFillCartFill className="cart-fill" onClick={handleShow} />
+            <span className="cart-total" onClick={handleShow}>
+              {totalLength}
+            </span>
             <div className="search">
-            <MdKeyboardVoice className="keyboard-voice" onClick={() => setIsListening((prev) => !prev)}/>
-            <TextField
-              style={{ textAlign: "center" }}
-              id="standard-basic"
-              label="Search your favorite..."
-              value={search}
-              variant="standard"
-              onChange={(e) => handleChange(e)}
-            />
-            
+              <MdKeyboardVoice
+                className="keyboard-voice"
+                onClick={() => setIsListening((prev) => !prev)}
+              />
+              <TextField
+                style={{ textAlign: "center" }}
+                id="standard-basic"
+                label="Search your favorite..."
+                value={search}
+                variant="standard"
+                onChange={(e) => handleChange(e)}
+              />
             </div>
-            <Navbar className= "navbar" bg="light" expand="lg">
+            <Navbar className="navbar" bg="light" expand="lg">
               <Container>
                 <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
