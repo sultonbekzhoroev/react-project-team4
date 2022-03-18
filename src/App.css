@@ -189,5 +189,12 @@ ul {
 }
 
 .links {
-  margin-left: 450px;
+  margin-left: 500px;
+}
+
+@media screen and (max-width: 1400px) {
+    .links{
+      margin-left: 300px;
+    }
+      
 }
