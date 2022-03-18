@@ -15,6 +15,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 import About from './buttons/About'
 import Contacts from './buttons/Contacts'
 import Recipes from './buttons/Recips'
+import Home from './buttons/Home'
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -211,7 +212,7 @@ function App() {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <Navbar className="navbar" bg="light" expand="lg">
+             <Navbar className= "navbar" bg="light" expand="lg">
               <Container>
                 <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -226,74 +227,38 @@ function App() {
                         setSelectedCategory={setSelectedCategory}
                       />
                     ))}
+                    <div className="links">
+                     
+                     
+                     <Link className="page-link" to="/contacts">Contacts</Link>
+                     <Link className="page-link" to="/recipes">Recipes</Link>
+                     <Link className="page-link" to="/about">About</Link>
+                     <Link  className="page-link"/*   onClick={()}  */to="/home">Home</Link>
+                     </div>
                   </Nav>
+  
+
                 </Navbar.Collapse>
               </Container>
             </Navbar>
           </header>
 
-          {/* added buttons to Nav Bar */}
-          <>
-          <ul>
-        <Link to="/">Home</Link>
-      <br/>
-      <Link to="/about">About</Link>
-      <br/>
-      
-      <Link to="/contacts">Contacts</Link>
-      <br/>
-    
-      <Link to="/recipes">Recipes</Link>
-      <br/>
 
-    </ul>
-
-    {/* Added router */}
       <Switch>
-      <Route exact path="/">
-        <App/>
-      </Route>
-        <Route path="/about">
-          <About/>
-        </Route>
-        <Route path="/contacts">
-          <Contacts />
-        </Route>
-        <Route path="/recipes">
-          <Recipes />
-        </Route>
-      </Switch>
-          </>
-          <div id="home"></div>
-          <div className="container">
-            {searchedList.map((food) => (
-              <FoodCard
-                className="card"
-                addToBasket={addToBasket}
-                onRemove={onRemove}
-                key={food.id}
-                food={food}
-              />
-            ))}
-            <div id="drink"></div>
-            <div className="drinks">
-              <h4 className="h4">Coffee & Beverages</h4>
-              {drinksList.map((food) => (
-                <DrinkCard
-                  className="card"
-                  addToBasket={addToBasket}
-                  onRemove={onRemove}
-                  key={food.id}
-                  food={food}
-                />
-              ))}
-            </div>
-          </div>
+        <Route path="/home">
+          <Home searchedList={searchedList} FoodCard={FoodCard}  addToBasket={addToBasket} onRemove={onRemove} drinksList={drinksList} DrinkCard={DrinkCard} exact component={Home}/>
+          </Route>
+        <Route path="/about" exact component={About}/>
+        <Route path="/contacts" exact component={Contacts}/>
+        <Route path="/recipes" exact component={Recipes}/>
+       </Switch>
+  
+       
+
         </div>
       )}
     </div>
     </Router>
-  );
+    );
 }
-
 export default App;

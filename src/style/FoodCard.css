@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 .img-card{
     width: 287px;
     height: 300px;
@@ -21,6 +22,7 @@
 }
 .card{
     margin-bottom: 20px;
+    
 }
 .btn-price{
      display: inline;
