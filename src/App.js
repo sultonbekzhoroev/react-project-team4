@@ -10,9 +10,20 @@ import { BsFillCartFill } from "react-icons/bs";
 import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
-
-
 import "bootstrap/dist/css/bootstrap.min.css";
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import About from './buttons/About'
+import Contacts from './buttons/Contacts'
+import Recipes from './buttons/Recips'
+import Home from './buttons/Home'
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+const mic = new SpeechRecognition();
+
+mic.continuous = true;
+mic.interimResults = true;
+mic.lang = "en-US";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,8 +34,42 @@ function App() {
   const [filteredfoodList, setFilteredFoodList] = useState([]);
   const [basketfoodList, setBasketfoodList] = useState([]);
   const [search, setSearch] = useState("");
-  const [gift, setGift] =useState([]);
-  const [totalLength, setTotalLength] =useState([]);
+  const [gift, setGift] = useState([]);
+  const [totalLength, setTotalLength] = useState([]);
+  const [isListening, setIsListening] = useState(false);
+
+  useEffect(() => {
+    handleListen();
+  }, [isListening]);
+
+  const handleListen = () => {
+    if (isListening) {
+      mic.start();
+      mic.onend = () => {
+        console.log("continue..");
+        mic.start();
+      };
+    } else {
+      mic.stop();
+      mic.onend = () => {
+        console.log("Stopped Mic on  click");
+      };
+    }
+    mic.onstart = () => {
+      console.log("Mic on");
+    };
+    mic.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
+      console.log(transcript);
+      setSearch(transcript.toLowerCase());
+      mic.onerror = (event) => {
+        console.log(event.error);
+      };
+    };
+  };
 
   const getData = async () => {
     try {
@@ -46,11 +91,10 @@ function App() {
   };
 
   /* gift */
-  const random = Math.floor(Math.random() * drinksList.length); 
-  console.log("random",drinksList[random])
-   const randomDrink = drinksList[random] ;
+  const random = Math.floor(Math.random() * drinksList.length);
+  console.log("random", drinksList[random]);
+  const randomDrink = drinksList[random];
   /* gift end */
-
 
   /* добавление в корзину*/
   const addToBasket = (food) => {
@@ -92,8 +136,8 @@ function App() {
     getData();
   }, []);
 
-    useEffect(() => {
-   getTotalLength();
+  useEffect(() => {
+    getTotalLength();
   }, [basketfoodList]);
   /*search*/
   const handleChange = (e) => {
@@ -105,13 +149,15 @@ function App() {
     item.title.toLowerCase().includes(search.toLowerCase())
   );
 
- /*search end*/
+  /*search end*/
   /* total count */
   const getTotalLength = () => {
-		setTotalLength( basketfoodList.reduce((acc, value) => {
-			return acc + value.qty;
-		}, 0))   
-	};
+    setTotalLength(
+      basketfoodList.reduce((acc, value) => {
+        return acc + value.qty;
+      }, 0)
+    );
+  };
   /* total count end */
   let catList = ["All", ...new Set(foodList.map((food) => food.category))];
   console.log("catList", catList);
@@ -121,8 +167,8 @@ function App() {
   const handleShow = () => setmodalActive(true);
 
   return (
+    <Router>
     <div className="App">
-      
       {isLoading ? (
         <SpinnerDotted
           className="spinner"
@@ -148,21 +194,25 @@ function App() {
             <h1>STYLE SWEET</h1>
             <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
 
-            <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
-       <span className='cart-total' onClick={handleShow} >{totalLength}</span>
+            <BsFillCartFill className="cart-fill" onClick={handleShow} />
+            <span className="cart-total" onClick={handleShow}>
+              {totalLength}
+            </span>
             <div className="search">
-              <MdKeyboardVoice className="keyboard-voice"/>
-            <TextField
-              style={{ textAlign: "center" }}
-              id="standard-basic"
-              label="Search your favorite..."
-              value={search}
-              variant="standard"
-              onChange={(e) => handleChange(e)}
-            />
-            
+              <MdKeyboardVoice
+                className="keyboard-voice"
+                onClick={() => setIsListening((prev) => !prev)}
+              />
+              <TextField
+                style={{ textAlign: "center" }}
+                id="standard-basic"
+                label="Search your favorite..."
+                value={search}
+                variant="standard"
+                onChange={(e) => handleChange(e)}
+              />
             </div>
-            <Navbar className= "navbar" bg="light" expand="lg">
+             <Navbar className= "navbar" bg="light" expand="lg">
               <Container>
                 <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -177,40 +227,38 @@ function App() {
                         setSelectedCategory={setSelectedCategory}
                       />
                     ))}
+                    <div className="links">
+                     
+                     
+                     <Link className="page-link" to="/contacts">Contacts</Link>
+                     <Link className="page-link" to="/recipes">Recipes</Link>
+                     <Link className="page-link" to="/about">About</Link>
+                     <Link  className="page-link"/*   onClick={()}  */to="/home">Home</Link>
+                     </div>
                   </Nav>
+  
+
                 </Navbar.Collapse>
               </Container>
             </Navbar>
           </header>
-          <div id="home"></div>
-          <div className="container">
-            {searchedList.map((food) => (
-              <FoodCard
-                className="card"
-                addToBasket={addToBasket}
-                onRemove={onRemove}
-                key={food.id}
-                food={food}
-              />
-            ))}
-            <div id="drink"></div>
-            <div className="drinks">
-              <h4 className="h4">Coffee & Beverages</h4>
-              {drinksList.map((food) => (
-                <DrinkCard
-                  className="card"
-                  addToBasket={addToBasket}
-                  onRemove={onRemove}
-                  key={food.id}
-                  food={food}
-                />
-              ))}
-            </div>
-          </div>
+
+
+      <Switch>
+        <Route path="/home">
+          <Home searchedList={searchedList} FoodCard={FoodCard}  addToBasket={addToBasket} onRemove={onRemove} drinksList={drinksList} DrinkCard={DrinkCard} exact component={Home}/>
+          </Route>
+        <Route path="/about" exact component={About}/>
+        <Route path="/contacts" exact component={Contacts}/>
+        <Route path="/recipes" exact component={Recipes}/>
+       </Switch>
+  
+       
+
         </div>
       )}
     </div>
-  );
+    </Router>
+    );
 }
-
 export default App;

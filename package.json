@@ -7,17 +7,25 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
+<<<<<<< HEAD
+=======
+    "@mui/styled-engine-sc": "^5.4.2",
+>>>>>>> 43d88f0f33866829a477d2c5ca86ba15b8a019c2
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.26.0",
+    "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "react": "^17.0.2",
-    "react-bootstrap": "^2.2.0",
+    "react-bootstrap": "^2.2.1",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
+    "react-speech-recognition": "^3.9.0",
+    "reactstrap": "^9.0.1",
     "spinners-react": "^1.0.6",
+    "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

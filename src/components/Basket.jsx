@@ -60,6 +60,3 @@ export const Basket = ({modalActive, randomDrink,handleClose, basketfoodList, ad
 
        )
 }
-
-
-
