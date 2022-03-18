@@ -11,11 +11,11 @@ import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
-import About from './buttons/About'
-import Contacts from './buttons/Contacts'
-import Recipes from './buttons/Recips'
-import Home from './buttons/Home'
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import About from "./buttons/About";
+import Contacts from "./buttons/Contacts";
+import Recipes from "./buttons/Recips";
+import Home from "./buttons/Home";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -34,7 +34,7 @@ function App() {
   const [filteredfoodList, setFilteredFoodList] = useState([]);
   const [basketfoodList, setBasketfoodList] = useState([]);
   const [search, setSearch] = useState("");
-  const [gift, setGift] = useState([]);
+
   const [totalLength, setTotalLength] = useState([]);
   const [isListening, setIsListening] = useState(false);
 
@@ -168,97 +168,109 @@ function App() {
 
   return (
     <Router>
-    <div className="App">
-      {isLoading ? (
-        <SpinnerDotted
-          className="spinner"
-          size={90}
-          thickness={172}
-          speed={100}
-          color="rgba(172, 57, 100, 0.85)"
-        />
-      ) : (
-        <div>
-          <Basket
-            className="cart"
-            modalActive={modalActive}
-            handleClose={handleClose}
-            setmodalActive={setmodalActive}
-            addToBasket={addToBasket}
-            onRemove={onRemove}
-            randomDrink={randomDrink}
-            basketfoodList={basketfoodList}
+      <div className="App">
+        {isLoading ? (
+          <SpinnerDotted
+            className="spinner"
+            size={90}
+            thickness={172}
+            speed={100}
+            color="rgba(172, 57, 100, 0.85)"
           />
+        ) : (
+          <div>
+            <Basket
+              className="cart"
+              modalActive={modalActive}
+              handleClose={handleClose}
+              setmodalActive={setmodalActive}
+              addToBasket={addToBasket}
+              onRemove={onRemove}
+              randomDrink={randomDrink}
+              basketfoodList={basketfoodList}
+            />
 
-          <header>
-            <h1>STYLE SWEET</h1>
-            <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
+            <header>
+              <h1>STYLE SWEET</h1>
+              <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
 
-            <BsFillCartFill className="cart-fill" onClick={handleShow} />
-            <span className="cart-total" onClick={handleShow}>
-              {totalLength}
-            </span>
-            <div className="search">
-              <MdKeyboardVoice
-                className="keyboard-voice"
-                onClick={() => setIsListening((prev) => !prev)}
-              />
-              <TextField
-                style={{ textAlign: "center" }}
-                id="standard-basic"
-                label="Search your favorite..."
-                value={search}
-                variant="standard"
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
-             <Navbar className= "navbar" bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="me-auto">
-                    {catList.map((category) => (
-                      <NavBar
-                        className="cat"
-                        key={category}
-                        drinksList={drinksList}
-                        category={category}
-                        setSelectedCategory={setSelectedCategory}
-                      />
-                    ))}
-                    <div className="links">
-                     
-                     
-                     <Link className="page-link" to="/contacts">Contacts</Link>
-                     <Link className="page-link" to="/recipes">Recipes</Link>
-                     <Link className="page-link" to="/about">About</Link>
-                     <Link  className="page-link"/*   onClick={()}  */to="/home">Home</Link>
-                     </div>
-                  </Nav>
-  
+              <BsFillCartFill className="cart-fill" onClick={handleShow} />
+              <span className="cart-total" onClick={handleShow}>
+                {totalLength}
+              </span>
+              <div className="search">
+                <MdKeyboardVoice
+                  className="keyboard-voice"
+                  onClick={() => setIsListening((prev) => !prev)}
+                />
+                <TextField
+                  style={{ textAlign: "center" }}
+                  id="standard-basic"
+                  label="Search your favorite..."
+                  value={search}
+                  variant="standard"
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <Navbar className="navbar" bg="light" expand="lg">
+                <Container>
+                  <Navbar.Brand href="#drink">Coffee & Beverages</Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                      {catList.map((category) => (
+                        <NavBar
+                          className="cat"
+                          key={category}
+                          drinksList={drinksList}
+                          category={category}
+                          setSelectedCategory={setSelectedCategory}
+                        />
+                      ))}
+                      <div className="links">
+                        <Link className="page-link" to="/contacts">
+                          Contacts
+                        </Link>
+                        <Link className="page-link" to="/recipes">
+                          Recipes
+                        </Link>
+                        <Link className="page-link" to="/about">
+                          About
+                        </Link>
+                        <Link
+                          className="page-link"
+                          /*   onClick={()}  */ to="/home"
+                        >
+                          Home
+                        </Link>
+                      </div>
+                    </Nav>
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
+            </header>
 
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
-          </header>
-
-
-      <Switch>
-        <Route path="/home">
-          <Home searchedList={searchedList} FoodCard={FoodCard}  addToBasket={addToBasket} onRemove={onRemove} drinksList={drinksList} DrinkCard={DrinkCard} exact component={Home}/>
-          </Route>
-        <Route path="/about" exact component={About}/>
-        <Route path="/contacts" exact component={Contacts}/>
-        <Route path="/recipes" exact component={Recipes}/>
-       </Switch>
-  
-       
-
-        </div>
-      )}
-    </div>
+            <Switch>
+              <Route path="/home">
+                <Home
+                  searchedList={searchedList}
+                  FoodCard={FoodCard}
+                  addToBasket={addToBasket}
+                  onRemove={onRemove}
+                  drinksList={drinksList}
+                  DrinkCard={DrinkCard}
+                  exact
+                  component={Home}
+                />
+              </Route>
+              <Route path="/about" exact component={About} />
+              <Route path="/contacts" exact component={Contacts} />
+              <Route path="/recipes" exact component={Recipes} />
+            </Switch>
+          </div>
+        )}
+      </div>
     </Router>
-    );
+  );
 }
 export default App;
