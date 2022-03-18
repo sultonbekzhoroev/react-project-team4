@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Modal, Button } from 'react-bootstrap';
 import '../style/Basket.css'
 
-export const Basket = ({modalActive, setmodalActive,handleClose, basketfoodList, addToBasket, onRemove}) =>{
+export const Basket = ({modalActive, randomDrink,handleClose, basketfoodList, addToBasket, onRemove}) =>{
        
          const getTotal = () => {
 		return basketfoodList.reduce((acc, value) => {
@@ -14,8 +14,17 @@ export const Basket = ({modalActive, setmodalActive,handleClose, basketfoodList,
        return (
         <Modal show={modalActive} onHide={handleClose}>
         <Modal.Header closeButton={handleClose}>
-          <Modal.Title>{basketfoodList.length === 0 ? <div>Cart is empty</div> :<div>Your order</div> }</Modal.Title>
+          <Modal.Title>{basketfoodList.length === 0 ? <div>Cart is empty</div> :<div>
+            <div key ={randomDrink.id} className='row'>
+                <img className="order-img" src={randomDrink.img}></img>
+                <div className="rigth-side">
+                  <div className="free">Your free drink</div>
+           <div className="random-title">{randomDrink.title}</div>
+                </div>
+           </div></div>
+         }</Modal.Title>
         </Modal.Header>
+        <div className="order-text">Your order: </div>
         <Modal.Body>
             {basketfoodList.map((food)=>(
                 
@@ -38,7 +47,7 @@ export const Basket = ({modalActive, setmodalActive,handleClose, basketfoodList,
        ))}
      
         </Modal.Body>
-         <h5 className="h4 text">Total sum: <h4 className="h4 total">${getTotal()}</h4></h5>
+         <h5 className="h4 text">Total sum: $ {getTotal()}</h5>
         <Modal.Footer>
           <Button  variant="secondary" onClick={handleClose}>
             Close

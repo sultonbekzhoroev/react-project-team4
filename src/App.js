@@ -23,6 +23,8 @@ function App() {
   const [filteredfoodList, setFilteredFoodList] = useState([]);
   const [basketfoodList, setBasketfoodList] = useState([]);
   const [search, setSearch] = useState("");
+  const [gift, setGift] =useState([]);
+  const [totalLength, setTotalLength] =useState([]);
 
   const getData = async () => {
     try {
@@ -42,6 +44,13 @@ function App() {
       console.log(error);
     }
   };
+
+  /* gift */
+  const random = Math.floor(Math.random() * drinksList.length); 
+  console.log("random",drinksList[random])
+   const randomDrink = drinksList[random] ;
+  /* gift end */
+
 
   /* добавление в корзину*/
   const addToBasket = (food) => {
@@ -83,9 +92,12 @@ function App() {
     getData();
   }, []);
 
+    useEffect(() => {
+   getTotalLength();
+  }, [basketfoodList]);
   /*search*/
   const handleChange = (e) => {
-    console.log(e.target.value);
+    console.log("target", e.target.value);
     setSearch(e.target.value);
   };
 
@@ -94,9 +106,15 @@ function App() {
   );
 
  /*search end*/
-  
+  /* total count */
+  const getTotalLength = () => {
+		setTotalLength( basketfoodList.reduce((acc, value) => {
+			return acc + value.qty;
+		}, 0))   
+	};
+  /* total count end */
   let catList = ["All", ...new Set(foodList.map((food) => food.category))];
-  console.log(catList);
+  console.log("catList", catList);
 
   /*открытие и закрытие модального окна*/
   const handleClose = () => setmodalActive(false);
@@ -122,6 +140,7 @@ function App() {
             setmodalActive={setmodalActive}
             addToBasket={addToBasket}
             onRemove={onRemove}
+            randomDrink={randomDrink}
             basketfoodList={basketfoodList}
           />
 
@@ -130,7 +149,7 @@ function App() {
             <h4>YOUR DAY FOR BEAUTIFUL & DELICIOUS DESSERTS</h4>
 
             <BsFillCartFill className= "cart-fill" onClick={handleShow}/>
-       <span className='cart-total' onClick={handleShow}>{basketfoodList.length}</span>
+       <span className='cart-total' onClick={handleShow} >{totalLength}</span>
             <div className="search">
               <MdKeyboardVoice className="keyboard-voice"/>
             <TextField

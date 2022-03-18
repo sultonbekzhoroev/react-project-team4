@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+*{
+    font-family: 'Prompt', sans-serif;
+}
 .order-img {
     width: 120px;
     height: 120px;
@@ -44,6 +48,15 @@
     display: inline;
     padding: 5px;
 }
-.total{
+.text, .free{
     color: red;
+    font-family: 'Prompt', sans-serif;
+}
+
+.random-title{
+    font-size: 0.8em;
+    font-family: 'Prompt', sans-serif;
+}
+.order-text{
+    font-size:20px;
 }

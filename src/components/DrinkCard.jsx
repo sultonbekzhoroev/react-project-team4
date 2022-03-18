@@ -4,8 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "../style/FoodCard.css"
 
 
-export const DrinkCard = ({food, addToBasket, drinksList}) =>{
-     const [item, setItem] = useState([])
+export const DrinkCard = ({food, addToBasket}) =>{
     return (
        
           <Card style={{ width: '18rem' }} className="card">
