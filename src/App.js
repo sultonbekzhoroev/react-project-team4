@@ -232,7 +232,7 @@ function App() {
             </Navbar>
           </header>
 
-          
+          {/* added buttons to Nav Bar */}
           <>
           <ul>
         <Link to="/">Home</Link>
@@ -248,7 +248,7 @@ function App() {
 
     </ul>
 
-
+    {/* Added router */}
       <Switch>
       <Route exact path="/">
         <App/>
