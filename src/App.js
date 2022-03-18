@@ -11,6 +11,10 @@ import { SpinnerDotted } from "spinners-react";
 import { TextField } from "@mui/material";
 import { MdKeyboardVoice } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import About from './buttons/About'
+import Contacts from './buttons/Contacts'
+import Recipes from './buttons/Recips'
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -162,6 +166,7 @@ function App() {
   const handleShow = () => setmodalActive(true);
 
   return (
+    <Router>
     <div className="App">
       {isLoading ? (
         <SpinnerDotted
@@ -226,6 +231,39 @@ function App() {
               </Container>
             </Navbar>
           </header>
+
+          {/* added buttons to Nav Bar */}
+          <>
+          <ul>
+        <Link to="/">Home</Link>
+      <br/>
+      <Link to="/about">About</Link>
+      <br/>
+      
+      <Link to="/contacts">Contacts</Link>
+      <br/>
+    
+      <Link to="/recipes">Recipes</Link>
+      <br/>
+
+    </ul>
+
+    {/* Added router */}
+      <Switch>
+      <Route exact path="/">
+        <App/>
+      </Route>
+        <Route path="/about">
+          <About/>
+        </Route>
+        <Route path="/contacts">
+          <Contacts />
+        </Route>
+        <Route path="/recipes">
+          <Recipes />
+        </Route>
+      </Switch>
+          </>
           <div id="home"></div>
           <div className="container">
             {searchedList.map((food) => (
@@ -254,6 +292,7 @@ function App() {
         </div>
       )}
     </div>
+    </Router>
   );
 }
 
