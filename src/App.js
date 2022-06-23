@@ -251,7 +251,7 @@ function App() {
             </header>
 
             <Switch>
-              <Route path="/home">
+              <Route path="/">
                 <Home
                   searchedList={searchedList}
                   FoodCard={FoodCard}
